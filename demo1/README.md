@@ -30,7 +30,7 @@ npx webpack
 ```
 ## 利用 scripts 进行 webpack 进行打包
 修改___package.json___ 的 scripts 属性
-```
+```javascript
 "scripts": {
 	"build": "webpack"
 }
@@ -58,9 +58,9 @@ yarn add webpack-dev-server -D
 npx webpack-dev-server
 ```
 
-## 用 scripts 运行 webpack
+## 用 scripts 运行 webpack-dev-server
 在  ___package.json___ 文件的  **scripts**  属性中新增  **dev**  脚本
-```
+```javascript
 "scripts": {
 	"build": "webpack --config webpack.config.js",
 	"dev": "webpack-dev-server"
@@ -73,7 +73,7 @@ npm run dev
 
 ## 手动配置 devServer
 修改 ___webpack.config.js___ 文件，添加 `webServer`属性
-```
+```javascript
 devServer: {
 	port: 3000,
 	progress: true,
