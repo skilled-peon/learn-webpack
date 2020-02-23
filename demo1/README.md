@@ -17,7 +17,7 @@ yarn add webpack webpack-cli -D
 
 ## 手动配置 webpack
 + 默认配置文件的名字 `webpack.config.js`
-
+> webpack 引用 webpack-cli，webpack-cli/bin 文件夹中有个 config-yargs.js 文件, 查看该文件可以查询 webpack 的默认配置值
 
 ## 测试 webpack.config.js 文件是否编写正确
 ```
@@ -40,7 +40,7 @@ npx webpack
 npm run build
 ```
 
-# 2.html开发服务器
+# 2.http 开发服务器
 
 ## 安装 webpack-dev-server
 + 使用 npm
@@ -59,7 +59,7 @@ npx webpack-dev-server
 ```
 
 ## 用 scripts 运行 webpack
-在___package.json___ 文件的 **scripts** 属性中新增 **dev** 脚本
+在  ___package.json___ 文件的  **scripts**  属性中新增  **dev**  脚本
 ```
 "scripts": {
 	"build": "webpack --config webpack.config.js",
