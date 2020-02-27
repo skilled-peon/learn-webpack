@@ -18,3 +18,5 @@ learn to config webpack from scratch
 |demo7|引入全局变量|
 |demo8|引用图片|
 |demo9|打包文件分类|
+|demo10|打包多页应用|
+|demo11|sourceMap|
