@@ -17,4 +17,4 @@ learn to config webpack from scratch
 |demo6|使用 plugin-transform-runtime 及 eslint |
 |demo7|引入全局变量|
 |demo8|引用图片|
-|demo9|打包多页应用|
+|demo9|打包文件分类|
