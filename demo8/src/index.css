@@ -1,0 +1,10 @@
+@import './a.css';
+
+body {
+    background: red;
+}
+
+div {
+    width: 315px; height: 395px;
+    background: url('./mouse.jpg')
+}
