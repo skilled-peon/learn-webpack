@@ -20,3 +20,5 @@ learn to config webpack from scratch
 |demo9|打包文件分类|
 |demo10|打包多页应用|
 |demo11|sourceMap|
+|demo12|watch用法|
+|demo13|webpack小插件|
