@@ -1,51 +1,50 @@
-## [1.module.noParse](https://webpack.js.org/configuration/module/#modulenoparse)
-阻止 webpack 解析某个模块的依赖库。
-**webpack.config.js**
 
-```
-module.exports = {
-  //...
-  module: {
-    noParse: /jquery|lodash/,
-  }
-};
-```
+`index.js` 和 `other.js` 均引用 `a.js` 和 `b.js`
 
-```
-module.exports = {
-  //...
-  module: {
-    noParse: (content) => /jquery|lodash/.test(content)
-  }
-};
-```
-
-## [ IgnorePlugin ](https://webpack.js.org/plugins/ignore-plugin/)
-以 [Moment](https://momentjs.com/ "moment") 为例
-```
-yarn add moment
-```
-测试代码
+## 修改配置
+设置多入口
 ```javascript
-import moment from 'moment';
-// index.js
-// 手动引入所需要的语言包
-import 'moment/locale/zh-cn';
-
-// 距离今天23:59 还有多久
-let r = moment().endOf('day').fromNow(); 
-console.log(r);
-```
-
-传递给 IgnorePlugin 的参数
-+ 第一个 resourceRegExp 参数不会针对导入或要求的解析文件名或绝对模块名进行测试，而是针对在发生导入的源代码中传递给要求或导入的字符串进行测试，[例子](https://webpack.js.org/plugins/ignore-plugin/#example-of-ignoring-moment-locales "例子")
-+ 第二个 contextRegExp 参数来选择从中进行 import 的特定目录。
-
-```
+// webpack.config.js
 module.exports = {
-	plugins: [
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    ],
+    entry: {
+        index: './src/index.js',
+        other: './src/other.js'
+    }
+}
+```
+修改名称
+```javascript
+// webpack.config.js
+module.exports = {
+    output: {
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'dist')
+    }
+}
+```
+**分割代码块**
+```javascript
+module.exports = {
+    optimization: {
+        splitChunks: { // 分割代码块
+            cacheGroups: { // 缓存组
+                common: { // 公共的模块
+                    chunks:'initial',
+                    minSize:0,
+                    minChunks:1
+                },
+                vendor: {
+                    priority: 1,
+                    test: /node_modules/,
+                    chunks:'initial',
+                    minSize:0,
+                    minChunks:2
+                }
+            }
+        }
+    }
 }
 ```
 
+`common` 是抽取的内部公共代码，
+`vendor` 是抽取的第三方代码，需要设置 `priority:1`
