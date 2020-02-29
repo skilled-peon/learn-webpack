@@ -1,125 +1,110 @@
-## node 模拟一个服务器
-+ 新建 server.js 文件
+## 指定模块查找路径
+[官方文档 v12.x：从 node_modules 文件夹 加载模块](https://nodejs.org/dist/latest-v12.x/docs/api/modules.html#modules_loading_from_node_modules_folders)
 
-```javascript
-// server.js
-const express = require('express');
+如果 Node.js 在当前目录中找不到 node_modules 文件夹，那么它将移动到父目录，依此类推，直到到达文件系统的根目录为止。
 
-const app = express();
-
-app.get('/api/user', (req, res)=> {
-    res.json({name: 'Hello World'})
-})
-
-app.listen(3000);
+我们可以使用 resolve 缩小查找范围
+```
+// webpack.config.js
+module.exports = {
+	modules: [path.resolve('node_modules')]
+}
 ```
 
-+ 使用 node.js 启动该服务
-在命令行窗口执行
+## 导入 bootstrap 的样式示例
++ 安装 style-loader 和 css-loader 并配置
 
 ```
-node server.js
+yarn add style-loader css-loader -D
 ```
 
-如此操作，我们就模拟好了一个提供 `/api/user` 接口且访问地址为 `http://localhost:3000` 的服务器
-
-## 配置 webpack devServer 代理 解决跨域
++ 配置
 
 ```javascript
 // webpack.config.js
 module.exports = {
-	devServer: {
-        proxy: {
-            // 1) 配置一个代理
-            '/api': 'http://localhost:3000'
-        }
-    }
-}
-```
-
-## 重写代理路径
-如果 接口地址 为 `/user`
-1.修改 `server.js` 并重新执行 `node server.js`
-
-```
-...
-
-app.get('/user', (req, res)=> {
-    res.json({name: 'Hello World'})
-})
-
-...
-```
-
-2.代理-路径重写：
-
-```
-module.exports = {
-	devServer: {
-        proxy: {
-            // 重写的方式，把请求转发到 express 服务器上
-            '/api': {
-                target: 'http://localhost:3000',
-                pathRewrite: { '/api' : '' }
-            }
-        }
-    }
-}
-```
-
-
-## 使用 devServer 本地模拟数据
-+ 修改 `index.js`
-
-```javascript
-// index.js
-...
-// 使用 devServer.before 模拟请求时
-xhr.open('GET', '/user', true);
-...
-```
-
-+ 修改配置文件
-
-```javascript
-// webpack.config.js
-module.exports = {
-	devServer: {
-		before(app) {
-			app.get('/user', (req,res) => {
-				res.json({name: "hook test before()"})
-			})
+	rules : [
+		{
+			test: /\.css$/,
+			use: ['style-loader', 'css-loader']
 		}
+	]
+}
+```
+
++ 安装 bootstrap 导入样式
+
+```
+yarn add bootstrap
+```
+
++ 使用 bootstrap 样式
+
+```
+// index.js
+import 'bootstrap/dist/css/bootstrap.css';
+```
+
+```
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn btn-danger"></button>
+</body>
+</html>
+```
+
+## 使用 alias 缩短引用
+```
+// webpack.config.js
+module.exports = {
+	alias: {
+		bootstrap: 'bootstrap/dist/css/bootstrap.css'
 	}
 }
 ```
 
-## 服务器端和 webpack 端口使用同一个
-借助 [webapck-dev-middleware](https://www.npmjs.com/package/webpack-dev-middleware "webapck-dev-middleware") 中间件, 把前端代码也启动到服务器端口上
-
-+ 安装
-
 ```
-yarn add webpack-dev-middleware -D
+// 1) 添加 alias 配置前
+// import 'bootstrap/dist/css/bootstrap.css';
+// 2) 添加 alias 配置后
+import 'bootstrap';
 ```
 
-+ 新建 server.middle.js 并在命令行中运行 `node server.middle.js`
+## 修改 main 文件的寻找顺序
+```
+// webpack.config.js
+module.exports = {
+	mainFields: [
+		'style', 'main'
+	]
+}
+```
 
 ```
-const express = require('express');
-const webpack = require('webpack')
-const middle = require('webpack-dev-middleware')
+// 1) 添加 mainFields 配置前
+// import 'bootstrap/dist/css/bootstrap.css';
+// 2) 添加 mainFields 配置后
+import 'bootstrap';
+```
 
-const app = express();
-const config = require('./webpack.config.js');
+## 修改 extensions 扩展名
+```
+// webpack.config.js
+module.exports = {
+	extensions: ['.js','.css','.json']
+}
+```
 
-const compiler = webpack(config);
-
-app.use(middle(compiler));
-
-app.get('/user', (req, res)=> {
-    res.json({name: 'Hello World'})
-})
-
-app.listen(3000);
+```javascript
+// 1) 添加 extensions 前
+// import './style.css';
+// 2) 添加 extensions 后
+import './style';
 ```
