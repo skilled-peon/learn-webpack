@@ -22,3 +22,5 @@ learn to config webpack from scratch
 |demo11|sourceMap|
 |demo12|watch用法|
 |demo13|webpack小插件|
+|demo14|webpack跨域问题|
+|demo15|定义环境变量|
