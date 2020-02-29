@@ -3,7 +3,6 @@ learn to config webpack from scratch
 
 #  准备工作：
 下载代码到本地后，需要执行安装
-+ `npm install`
 + `yarn install`
 
 # demo介绍
@@ -24,3 +23,4 @@ learn to config webpack from scratch
 |demo13|webpack小插件|
 |demo14|webpack跨域问题|
 |demo15|定义环境变量|
+|demo16|区分不同环境|
