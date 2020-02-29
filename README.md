@@ -25,3 +25,5 @@ learn to config webpack from scratch
 |demo15|resolve属性的配置|
 |demo16|定义环境变量|
 |demo17|区分不同环境|
+|demo18|IgnorePlugin|
+|demo19|ddlPlugin|
