@@ -27,3 +27,5 @@ learn to config webpack from scratch
 |demo17|区分不同环境|
 |demo18|IgnorePlugin|
 |demo19|ddlPlugin|
+|demo20|抽离公共代码|
+|demo21|懒加载&热更新|
